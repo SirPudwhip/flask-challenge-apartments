@@ -10,7 +10,7 @@ db = SQLAlchemy()
 class Apartment(db.Model, SerializerMixin): 
     __tablename__ = 'apartments'
 
-    serialize_rules = ('-leases.apartment',)
+    serialize_rules = ('-leases.apartment', '-leases.tenant')
 
     id = db.Column(db.Integer, primary_key = True)
     number = db.Column(db.Integer)
