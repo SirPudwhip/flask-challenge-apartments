@@ -24,23 +24,21 @@ class Tenant(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable = False)
-    age = db.Column(db.Integer)
+    age = db.Column(db.Integer, nullable = False)
 
     leases = db.relationship("Lease", backref='tenant')
 
 
     @validates('age')
     def validate_age(self, key, age):
-        if age < 18:
-            raise ValueError("You are not old enough")
-        return age
+        if age >= 18:
+            return age
+        raise ValueError("You are not old enough")
 
     @validates('name')
     def validate_name(self, key, name): 
-        if not name:
-            raise ValueError("Name is required")
-        elif name == "":
-            raise ValueError("Name is required")
+        if name == "":
+            raise ValueError("Name is required2")
         return name
 
     def __repr__(self):
