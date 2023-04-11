@@ -12,7 +12,7 @@ class Apartment(db.Model, SerializerMixin):
 
     serialize_rules = ('-leases.apartment',)
 
-    id = db.Column(db.Integer, PrimaryKey = True)
+    id = db.Column(db.Integer, primary_key = True)
     number = db.Column(db.Integer)
     
     leases = db.relationship("Lease", backref="apartment")
@@ -22,7 +22,7 @@ class Tenant(db.Model, SerializerMixin):
 
     serialize_rules = ('-leases.tenant',)
 
-    id = db.Column(db.Integer, PrimaryKey = True)
+    id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable = False)
     age = db.Column(db.Integer)
 
@@ -52,11 +52,11 @@ class Lease(db.Model, SerializerMixin):
 
     serialize_rules = ('-tenant.leases', '-apartment.leases',)
 
-    id = db.Column(db.Integer, PrimaryKey = True)
+    id = db.Column(db.Integer, primary_key = True)
 
     rent = db.Column(db.Integer)
-    tenant_id = db.Column(db.Integer, ForeignKey= 'tenants.id')
-    apartment_id = db.Column(db.Integer, ForeignKey = 'apartments.id')
+    tenant_id = db.Column(db.Integer, db.ForeignKey('tenants.id'))
+    apartment_id = db.Column(db.Integer, db.ForeignKey('apartments.id'))
 
 
 
